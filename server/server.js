@@ -10,13 +10,8 @@ import { stripeWebhooks } from './controllers/webhooks.js'
 
 const app = express()
 
-app.use(cors({
-    origin: 'https://flash-gpt-ruby.vercel.app/', // Allow only your frontend origin
-    methods: ['GET', 'POST', 'PUT', 'DELETE'], // Specify allowed methods
-    credentials: true // If your frontend sends cookies or auth headers
-}));
+app.use(cors());
 
-app.options("*", cors());
 await connectDB()
 
 // Stripe Webhooks
