@@ -15,6 +15,8 @@ app.use(cors({
     methods: ['GET', 'POST', 'PUT', 'DELETE'], // Specify allowed methods
     credentials: true // If your frontend sends cookies or auth headers
 }));
+
+app.options("*", cors());
 await connectDB()
 
 // Stripe Webhooks
