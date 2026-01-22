@@ -11,12 +11,12 @@ import { stripeWebhooks } from './controllers/webhooks.js'
 const app = express()
 
 await connectDB()
+app.use(cors())
 
 // Stripe Webhooks
 app.post('/api/stripe', express.raw({type: 'application/json'}), stripeWebhooks)
 
 // Middleware
-app.use(cors())
 app.use(express.json())
 
 // Routes
