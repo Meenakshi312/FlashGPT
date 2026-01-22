@@ -23,7 +23,7 @@
                 },
                 {
                     "key": "Access-Control-Allow-Origin",
-                    "value": ["https://flash-gpt-ruby.vercel.app/","http://localhost:5173/"]
+                    "value": "*"
                 },
                 {
                     "key": "Access-Control-Allow-Methods",
