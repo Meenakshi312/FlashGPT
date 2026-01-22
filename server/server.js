@@ -9,9 +9,17 @@ import creditRouter from './routes/creditRoutes.js'
 import { stripeWebhooks } from './controllers/webhooks.js'
 
 const app = express()
-
 await connectDB()
-app.use(cors())
+app.use(
+    cors({
+        origin: true,        // allow all origins (Vercel safe)
+        credentials: true,   // if using auth headers
+    })
+);
+
+// 🔥 HANDLE PREFLIGHT
+app.options("/", cors());
+// app.use(cors())
 
 // Stripe Webhooks
 app.post('/api/stripe', express.raw({type: 'application/json'}), stripeWebhooks)
