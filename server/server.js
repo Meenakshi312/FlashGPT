@@ -1,86 +1,88 @@
-import express from "express";
-import "dotenv/config";
-import cors from "cors";
-import connectDB from "./configs/db.js";
+// import express from "express";
+// import "dotenv/config";
+// import cors from "cors";
+// import connectDB from "./configs/db.js";
 
-import userRouter from "./routes/userRoutes.js";
-import chatRouter from "./routes/chatRoutes.js";
-import messageRouter from "./routes/messageRoutes.js";
-import creditRouter from "./routes/creditRoutes.js";
-import { stripeWebhooks } from "./controllers/webhooks.js";
+// import userRouter from "./routes/userRoutes.js";
+// import chatRouter from "./routes/chatRoutes.js";
+// import messageRouter from "./routes/messageRoutes.js";
+// import creditRouter from "./routes/creditRoutes.js";
+// import { stripeWebhooks } from "./controllers/webhooks.js";
 
-const app = express();
+// const app = express();
 
-const allowedOrigins = [
-    "https://flash-gpt-ruby.vercel.app"
-];
+// const allowedOrigins = [
+//     "https://flash-gpt-ruby.vercel.app"
+// ];
 
-app.use(cors({
-    origin: function (origin, callback) {
-        if (!origin) return callback(null, true);
-        if (allowedOrigins.includes(origin)) return callback(null, true);
-        return callback(new Error("Not allowed by CORS"));
-    },
-    credentials: true,
-    methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization"]
-}));
-
-app.options("*", cors());
-
-await connectDB();
-
-app.post(
-    "/api/stripe",
-    express.raw({ type: "application/json" }),
-    stripeWebhooks
-);
-
-app.use(express.json());
-
-app.get("/", (req, res) => res.send("Server is Live!"));
-app.use("/api/user", userRouter);
-app.use("/api/chat", chatRouter);
-app.use("/api/message", messageRouter);
-app.use("/api/credit", creditRouter);
-
-export default app;
+// app.use(cors({
+//     origin: function (origin, callback) {
+//         if (!origin) return callback(null, true);
+//         if (allowedOrigins.includes(origin)) return callback(null, true);
+//         return callback(new Error("Not allowed by CORS"));
+//     },
+//     credentials: true,
+//     methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+//     allowedHeaders: ["Content-Type", "Authorization"]
+// }));
 
 
-//import express from 'express'
-// import 'dotenv/config'
-// import cors from 'cors'
-// import connectDB from './configs/db.js'
-// import userRouter from './routes/userRoutes.js'
-// import chatRouter from './routes/chatRoutes.js'
-// import messageRouter from './routes/messageRoutes.js'
-// import creditRouter from './routes/creditRoutes.js'
-// import { stripeWebhooks } from './controllers/webhooks.js'
 
-// const app = express()
+// app.options("*", cors());
 
-// app.use(cors());
+// await connectDB();
 
-// await connectDB()
+// app.post(
+//     "/api/stripe",
+//     express.raw({ type: "application/json" }),
+//     stripeWebhooks
+// );
 
-// // Stripe Webhooks
-// app.post('/api/stripe', express.raw({type: 'application/json'}), stripeWebhooks)
+// app.use(express.json());
 
-// // Middleware
-// app.use(express.json())
+// app.get("/", (req, res) => res.send("Server is Live!"));
+// app.use("/api/user", userRouter);
+// app.use("/api/chat", chatRouter);
+// app.use("/api/message", messageRouter);
+// app.use("/api/credit", creditRouter);
 
-// // Routes
-// app.get('/', (req, res)=> res.send('Server is Live!'))
-// app.use('/api/user', userRouter)
-// app.use('/api/chat', chatRouter)
-// app.use('/api/message', messageRouter)
-// app.use('/api/credit', creditRouter)
+// export default app;
 
-// const PORT = process.env.PORT || 3000
 
-// app.listen(PORT, ()=>{
-//     console.log(`Server is running on port ${PORT}`)
-// })
+import express from 'express'
+import 'dotenv/config'
+import cors from 'cors'
+import connectDB from './configs/db.js'
+import userRouter from './routes/userRoutes.js'
+import chatRouter from './routes/chatRoutes.js'
+import messageRouter from './routes/messageRoutes.js'
+import creditRouter from './routes/creditRoutes.js'
+import { stripeWebhooks } from './controllers/webhooks.js'
+
+const app = express()
+
+app.use(cors());
+
+await connectDB()
+
+// Stripe Webhooks
+app.post('/api/stripe', express.raw({type: 'application/json'}), stripeWebhooks)
+
+// Middleware
+app.use(express.json())
+
+// Routes
+app.get('/', (req, res)=> res.send('Server is Live!'))
+app.use('/api/user', userRouter)
+app.use('/api/chat', chatRouter)
+app.use('/api/message', messageRouter)
+app.use('/api/credit', creditRouter)
+
+const PORT = process.env.PORT || 3000
+
+app.listen(PORT, ()=>{
+    console.log(`Server is running on port ${PORT}`)
+})
 
 // import express from "express";
 // import "dotenv/config";
