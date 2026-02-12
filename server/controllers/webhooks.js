@@ -2,6 +2,7 @@ import Stripe from "stripe";
 import Transaction from "../models/Transaction.js";
 import User from "../models/User.js";
 
+
 export const stripeWebhooks = async (request, response) => {
     const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
     const sig = request.headers["stripe-signature"];
@@ -15,15 +16,14 @@ export const stripeWebhooks = async (request, response) => {
 
     try {
         switch (event.type) {
-            case "payment_intent.succeeded": {
-                const paymentIntent = event.data.object;
-                const sessionList=await stripe.checkout.sessions.list({
-                    payment_intent:paymentIntent.id,
-                })
-                const session=sessionList.data[0];
+            case "checkout.session.completed": {
+                const session = event.data.object;
+           
+
+
                 const { transactionId, appId } = session.metadata;
 
-                if (appId === "flashgpt" || appId === "quickgpt") {
+                if (appId === "FLASHGPT" || appId==='flashgpt' || appId === "quickgpt") {
                     const transaction = await Transaction.findOne({ _id: transactionId, isPaid: false });
                     if (!transaction) break;
 
